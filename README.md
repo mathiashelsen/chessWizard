@@ -16,11 +16,52 @@ A Chess Game for the C64
 # Piece Encoding
 Each piece has the following information
 
+Byte 0
+
 [7:5] Status  (active, idle, ...)
+
 [4]   Color   (black = 0, white = 1)
+
 [3:0] Type    (pawn = 0, knight = 1, ...)
 
+Byte 1
+
+[7:0] Value   (pawn = 1, knight = 3, ...)
+
+
+Byte 2 
+
 [7:0] Position, column
+
+
+Byte 3
+
 [7:0] Position, row
 
-3 Bytes for each piece, with 32 pieces makes 96 bytes of memory required for each possible board.
+4 Bytes for each piece, with 32 pieces makes 128 bytes of memory required for each possible board.
+We will probably require two boards: one actual, one where the computer experiments with moves.
+A routine will be needed to move from one board to another via a list of moves.
+
+# Move Encoding
+First byte: selects piece [0..32]
+Second byte: gain/loss
+Third, fourth byte: new position column, row respectively
+
+
+# Functions
+
+CopyBoard:
+  Copies current board into the experimenting board
+  Input: Starting board
+
+ExecuteMoves:
+  Input: Starting board
+  Input: MovesList
+  Input: Number of moves
+  Output: New board
+
+ComputerMakeMove:
+  AI solves for a good solution (loads Chess Engine)
+
+HumanMakeMove:
+  A lot of keyboard interaction
