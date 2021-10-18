@@ -7,9 +7,9 @@ A Chess Game for the C64
   * [0x002F:0x0020] : Pointer composition
 
 * [0x1000:0x1FFF] : Piece list, score, current player, moves list
-* [0x2000:0x2800] : 
-  * [0x2000:0x27FF] : Character RAM (0b100)
-  * [0x2800:0x2BFF] : Screen RAM (0b1010)
+* [0x6000:0x6800] : 
+  * [0x6000:0x67FF] : Character RAM (0b100)
+  * [0x6800:0x6BFF] : Screen RAM (0b1010)
 
 * [0xC000:0xFFFF] : Program code
 
