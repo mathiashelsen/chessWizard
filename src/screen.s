@@ -7,6 +7,7 @@ line_ctr  = $14
 initScreen:
   jsr .copyCharset
   jsr .initMemory
+  jsr .setCheckerboard
   rts
 
 .initMemory:
@@ -29,6 +30,34 @@ initScreen:
   sta $d018
   lda #$02
   sta $dd00
+
+.screenPtr  = $10
+
+.setCheckerboard
+  lda #$00
+  sta .screenPtr
+  lda #$d8
+  sta .screenPtr+1
+  ldx #$00
+  ldy #$00
+  lda #$0a
+- sta (.screenPtr),y
+  iny
+  iny
+  cpy #$08
+  bne -
+  ldy #$00
+  clc
+  lda .screenPtr
+  adc #$28
+  sta .screenPtr
+  lda .screenPtr+1
+  adc #$00
+  sta .screenPtr+1
+  inx
+  cpx #$08
+  bne -
+  rts
 
 .copyCharset:
   lda #<charset
