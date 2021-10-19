@@ -20,6 +20,12 @@ A Chess Game (for the C64, but not really, because too difficult)
 The stop condition is to check for check mate
 ```
   board.valid(): Check for check mate
+    for all piece of opposite player:
+      scores, moves = piece.getAllMoves()
+      // Check if the move would place the opposer at the kings position
+      if(move == board.piece[king])
+        return false
+    return true
 ```
 
 After a move has been made, the board has to be updated
@@ -39,6 +45,7 @@ Greedy algo:
     bestScore = -1
     for all piece of player:
       scores, moves = piece.getAllMoves()
+      // Score can be calculated from the board/move, not from getAllMoves
       for all move of moves:
         if(score > bestScore)
           bestMove = move
