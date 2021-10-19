@@ -9,10 +9,6 @@ main:
   jsr mainLoop
 
 mainLoop:
-  lda #$01
-  sta $6800
-  lda #$02
-  sta $6801
   jmp mainLoop
 
 !source "screen.s"

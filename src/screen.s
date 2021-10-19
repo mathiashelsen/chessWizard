@@ -8,13 +8,14 @@ initScreen:
   jsr .copyCharset
   jsr .initMemory
   jsr .setCheckerboard
+  jsr clearScreen
   rts
 
 .initMemory:
   ;; Set the background colors
-  lda #$04
+  lda #$00
   sta $d021
-  lda #$05
+  lda #$01
   sta $d022
   lda #$06
   sta $d023
@@ -33,16 +34,26 @@ initScreen:
 
 .screenPtr  = $10
 
+.colorA     = $12
+.colorB     = $13
+.colorTmp   = $14
+
 .setCheckerboard
+  lda #$06
+  sta .colorA
+  lda #$0e
+  sta .colorB
   lda #$00
   sta .screenPtr
   lda #$d8
   sta .screenPtr+1
   ldx #$00
   ldy #$00
-  lda #$0a
-- sta (.screenPtr),y
+- lda .colorA
+  sta (.screenPtr),y
   iny
+  lda .colorB
+  sta (.screenPtr),y
   iny
   cpy #$08
   bne -
@@ -55,6 +66,12 @@ initScreen:
   adc #$00
   sta .screenPtr+1
   inx
+  lda .colorB
+  sta .colorTmp
+  lda .colorA
+  sta .colorB
+  lda .colorTmp
+  sta .colorA
   cpx #$08
   bne -
   rts
@@ -96,6 +113,44 @@ initScreen:
   jmp .copyLine
 
 .copyDone:
+  rts
+
+
+.screen_lb             = $54   ;; Both are used in the (ZP),y addressing mode
+.screen_hb             = $55   ;; to compose the screen RAM address
+.screen_base           = $60   ;; We alternate between 0x400 and 0x800
+
+clearScreen:
+  lda #$68
+  sta .screen_base
+  lda #$00
+  sta .screen_lb
+  lda .screen_base
+  sta .screen_hb
+
+  ldx #$00
+.clear_screen_loop:
+  jsr .clear_row_start
+  clc
+  lda .screen_lb
+  adc #$28
+  sta .screen_lb
+  lda .screen_hb
+  adc #$00
+  sta .screen_hb
+  inx
+  cpx #$19
+  bne .clear_screen_loop
+  rts
+
+.clear_row_start:
+  ldy #$00
+  lda #$56
+.clear_row:
+  sta (.screen_lb),y
+  iny
+  cpy #$29
+  bne .clear_row
   rts
 
 !source "charset.s"
