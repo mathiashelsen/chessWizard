@@ -1,67 +1,91 @@
 # chessWizard
-A Chess Game for the C64
+A Chess Game (for the C64, but not really, because too difficult)
 
-# Memory Map
-* [0x00FF:0x0000] : Local variables
-  * [0x001F:0x0010] : Function arguments
-  * [0x002F:0x0020] : Pointer composition
+# Algorithm overview
+```
+  board = initializeBoard();
 
-* [0x1000:0x1FFF] : Piece list, score, current player, moves list
-* [0x6000:0x6800] : 
-  * [0x6000:0x67FF] : Character RAM (0b100)
-  * [0x6800:0x6BFF] : Screen RAM (0b1010)
+  while(board.valid())
+  {
+    if(player)
+      move = engine.getMove(board);
+    else
+      move = human.getMove(board);
 
-* [0xC000:0xFFFF] : Program code
+    board.makeMove(move)
+    player = ~player;
+  }
+```
 
-# Piece Encoding
-Each piece has the following information
+The stop condition is to check for check mate
+```
+  board.valid(): Check for check mate
+```
 
-Byte 0
+After a move has been made, the board has to be updated
+```
+  board.makeMove(move): Update the piece list:
+    1) move the piece
+    2) possibly eliminate an opposing piece
+    3) possibly move another piece (castling)
+    4) possibly swap the original piece (pawn to queen)
+```
 
-[7:5] Status  (active, idle, ...)
+The most tricky thing is ofcourse the engine implementation. Probably
+best to start with a simple greedy or random engine.
+Greedy algo:
+```
+  engine.getMove(board):
+    bestScore = -1
+    for all piece of player:
+      scores, moves = piece.getAllMoves()
+      for all move of moves:
+        if(score > bestScore)
+          bestMove = move
+      return bestMove
+```
 
-[4]   Color   (black = 0, white = 1)
+Random algo:
+```
+  engine.getMove(board):
+    piece_idx = rand(0..15)
+    looking   = true
+    while(looking)
+      if(board[piece_idx] == active)
+        moves = board[piece_idx].getAllMoves();
+        if(moves != NULL)
+          return moves[rand(0..length(moves)-1)]
+      piece_idx = rand(0..15)
+```
 
-[3:0] Type    (pawn = 0, knight = 1, ...)
+Which boils down to the fact that we need a function:
+```
+  piece.getAllMoves():
+    switch(piece)
+      case(pawn):
+        possible: move 1 forward (stop before any)
+        possible: move 2 forward (stop before any)
+        possible: capture to side (x2)
+        possible: capture en-passant (x2)
+      case(rook):
+        possible: move N  (stop at other, stop before own)
+        possible: move E  (stop at other, stop before own)
+        possible: move S  (stop at other, stop before own)
+        possible: move W  (stop at other, stop before own)
+      case(bishop):
+        possible: move NE (stop at other, stop before own)
+        possible: move NW (stop at other, stop before own)
+        possible: move SE (stop at other, stop before own)
+        possible: move SW (stop at other, stop before own)
+      case(knight):
+        possible: move {+/-2, +/-1} (stop at other, stop before own)
+        possible: move {+/-1, +/-2} (stop at other, stop before own)
+      case(queen)
+        ...
+      case(king)
+        ...
+```
+However, this function does not filter if we would place ourselves checkmate.
+As such, it needs to call board.valid with the suggested move. The move has
+to be discarded if it would invalidate the position.
 
-Byte 1
-
-[7:0] Value   (pawn = 1, knight = 3, ...)
-
-
-Byte 2 
-
-[7:0] Position, column
-
-
-Byte 3
-
-[7:0] Position, row
-
-4 Bytes for each piece, with 32 pieces makes 128 bytes of memory required for each possible board.
-We will probably require two boards: one actual, one where the computer experiments with moves.
-A routine will be needed to move from one board to another via a list of moves.
-
-# Move Encoding
-First byte: selects piece [0..32]
-Second byte: gain/loss
-Third, fourth byte: new position column, row respectively
-
-
-# Functions
-
-CopyBoard:
-  Copies current board into the experimenting board
-  Input: Starting board
-
-ExecuteMoves:
-  Input: Starting board
-  Input: MovesList
-  Input: Number of moves
-  Output: New board
-
-ComputerMakeMove:
-  AI solves for a good solution (loads Chess Engine)
-
-HumanMakeMove:
-  A lot of keyboard interaction
