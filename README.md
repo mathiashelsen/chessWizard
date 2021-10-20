@@ -47,10 +47,12 @@ Greedy algo:
       scores, moves = piece.getAllMoves()
       // Score can be calculated from the board/move, not from getAllMoves
       for all move of moves:
-        if(score > bestScore)
+        if(score > bestScore && move == valid)
           bestMove = move
       return bestMove
 ```
+We thus also need an algorithm to check if a move is valid. If no valid moves are available,
+the player is checkmate. A move is valid if the king is not under attack.
 
 Random algo:
 ```
