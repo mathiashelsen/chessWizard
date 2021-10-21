@@ -58,7 +58,7 @@
 ##==========================================================================
 
 # The pre-processor and compiler options.
-MY_CFLAGS = 
+MY_CFLAGS = -Wall
 
 # The linker options.
 MY_LIBS   = 

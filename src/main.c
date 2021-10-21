@@ -13,8 +13,5 @@ int main(void)
 
   deleteBoard(myBoard);
 
-  t_move myMove_A = {.x = 2, .y = -1, .nextMove = NULL};
-  t_move myMove_B = {.x = 0, .y = 2,  .nextMove = &myMove_A};
-
   return EXIT_SUCCESS;
 }

@@ -16,12 +16,19 @@ typedef enum
   idle
 } t_pieceStatus;
 
+typedef enum
+{
+  white = 1,
+  black = -1
+} t_color;
+
 typedef struct
 {
-  t_pieceStatus status;
+  // Hmmm, this is not required because idle pieces will not be present on the board
+  // t_pieceStatus status;
   t_pieceType   type;
-  char  x;
-  char  y;
+  // White = 1 (moves up), black = -1 (moves down)
+  t_color       color;
 } t_piece;
 
 #endif

@@ -10,13 +10,12 @@ typedef struct
   t_piece*  pieces;
 } t_board;
 
-typedef enum
-{
-  black,
-  white
-} t_color;
-
 t_board*  newBoard(void);
 void      deleteBoard(t_board* board);
+t_piece*  pieceAt(t_board*, char, char);
+
+/*
+ * Will require makeMove, undoMove and checkValid
+ */
 
 #endif
