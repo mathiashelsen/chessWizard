@@ -1,19 +1,31 @@
 #include "move.h"
 
-void    deleteAll(t_move* move)
+void    deleteAllMoves(t_move* move)
 {
-  if(move->nextMove != NULL)
-    deleteAll(move->nextMove);
+  if(move->nextMove)
+    deleteAllMoves(move->nextMove);
 
   free(move);
 }
 
 t_move* getLastMove(t_move* move)
 {
-  if(move->nextMove != NULL)
+  if(move->nextMove)
     return getLastMove(move->nextMove);
   else
     return move;
+}
+
+void    printAllMoves(t_move* move)
+{
+  printf("Move: from %c%d to %c%d\n", 
+    move->from_x+'a',
+    move->from_y,
+    move->to_x+'a',
+    move->to_y);
+
+  if(move->nextMove)
+    printAllMoves(move->nextMove);
 }
 
 void    concatenateMovesList(t_move* listA, t_move* listB)
@@ -32,8 +44,10 @@ t_move* getAllMoves(t_board* board, t_color color)
 
   for(squareIdx = 0; squareIdx < 63; squareIdx++)
   {
-    if(  board->pieces[squareIdx].color == color
-      && board->pieces[squareIdx].type  == pawn )
+    
+    if(  board->pieces[squareIdx] 
+      && board->pieces[squareIdx]->color == color
+      && board->pieces[squareIdx]->type  == pawn )
     {
       searchResult = getAllPawnMoves(board, squareIdx);
 
@@ -59,7 +73,7 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
   char      pieceX;
   char      pieceY;
 
-  piece     = &(board->pieces[squareIdx]);
+  piece     = board->pieces[squareIdx];
   move      = NULL;
   nextMove  = NULL;
 

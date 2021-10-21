@@ -15,7 +15,9 @@ typedef struct t_move
   struct t_move*  nextMove;
 } t_move;
 
-void    deleteAll(t_move* move);
+void    deleteAllMoves(t_move* move);
+
+void    printAllMoves(t_move* move);
 
 t_move* getLastMove(t_move* move);
 

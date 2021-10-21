@@ -11,6 +11,18 @@ int main(void)
 
   printf("Allocated board at: %p\n", myBoard);
 
+  t_piece* myPawn = malloc(sizeof(t_piece));
+  myPawn->type  = pawn; 
+  myPawn->color = white;
+  myBoard->pieces[3 + 1*8] = myPawn;
+
+  t_move* allMoves = getAllMoves(myBoard, white);
+  if(allMoves)
+    printAllMoves(allMoves);
+  else
+    printf("No valid moves were found");
+
+  deleteAllMoves(allMoves);
   deleteBoard(myBoard);
 
   return EXIT_SUCCESS;

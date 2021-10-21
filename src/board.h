@@ -7,7 +7,7 @@
 
 typedef struct
 {
-  t_piece*  pieces;
+  t_piece** pieces;
 } t_board;
 
 t_board*  newBoard(void);
