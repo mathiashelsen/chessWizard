@@ -6,6 +6,7 @@ typedef enum
   pawn,
   rook,
   bishop,
+  knight,
   queen,
   king
 } t_pieceType;
@@ -30,5 +31,7 @@ typedef struct
   // White = 1 (moves up), black = -1 (moves down)
   t_color       color;
 } t_piece;
+
+const char* getPieceName(t_piece* piece);
 
 #endif

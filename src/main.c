@@ -15,10 +15,12 @@ int main(void)
   myPawn->type  = pawn; 
   myPawn->color = white;
   myBoard->pieces[3 + 1*8] = myPawn;
+  myBoard->pieces[4 + 2*8] = myPawn;
 
   t_move* allMoves = getAllMoves(myBoard, white);
+
   if(allMoves)
-    printAllMoves(allMoves);
+    printAllMoves(myBoard, allMoves);
   else
     printf("No valid moves were found");
 

@@ -16,16 +16,18 @@ t_move* getLastMove(t_move* move)
     return move;
 }
 
-void    printAllMoves(t_move* move)
+void    printAllMoves(t_board* board, t_move* move)
 {
-  printf("Move: from %c%d to %c%d\n", 
-    move->from_x+'a',
+  t_piece* piece = board->pieces[move->from_x + 8*move->from_y];
+  printf("Move %s from %c%d to %c%d\n", 
+    getPieceName(piece),
+    move->from_x+'A',
     move->from_y,
-    move->to_x+'a',
+    move->to_x+'A',
     move->to_y);
 
   if(move->nextMove)
-    printAllMoves(move->nextMove);
+    printAllMoves(board, move->nextMove);
 }
 
 void    concatenateMovesList(t_move* listA, t_move* listB)
