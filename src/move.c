@@ -65,11 +65,12 @@ t_move* getAllMoves(t_board* board, t_color color)
 
 /*
  * For a pawn at position squareIdx, this will return
- * all possible moves
+ * all possible moves.
  */
 t_move* getAllPawnMoves(t_board* board, char squareIdx)
 {
   t_piece*  piece;
+  t_piece*  pieceUnderAttack;
   t_move*   move;
   t_move*   nextMove;
   char      pieceX;
@@ -111,6 +112,36 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
         move                = nextMove;
       }
     }
+  }
+  
+  pieceUnderAttack = pieceAt(board, pieceX+1, pieceY+piece->color);
+  if(  pieceUnderAttack
+    && pieceUnderAttack->color == - piece->color )
+  {
+        nextMove            = malloc(sizeof(t_move));
+        nextMove->from_x    = pieceX;
+        nextMove->from_y    = pieceY;
+        nextMove->to_x      = pieceX+1;
+        nextMove->to_y      = pieceY + piece->color;
+        nextMove->nextMove  = move;
+
+        move                = nextMove;
+    
+  }
+
+  pieceUnderAttack = pieceAt(board, pieceX-1, pieceY+piece->color);
+  if(  pieceUnderAttack
+    && pieceUnderAttack->color == - piece->color )
+  {
+        nextMove            = malloc(sizeof(t_move));
+        nextMove->from_x    = pieceX;
+        nextMove->from_y    = pieceY;
+        nextMove->to_x      = pieceX-1;
+        nextMove->to_y      = pieceY + piece->color;
+        nextMove->nextMove  = move;
+
+        move                = nextMove;
+    
   }
 
   return move;

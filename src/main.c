@@ -12,10 +12,13 @@ int main(void)
   printf("Allocated board at: %p\n", myBoard);
 
   t_piece* myPawn = malloc(sizeof(t_piece));
+  t_piece* computerPawn = malloc(sizeof(t_piece));
   myPawn->type  = pawn; 
   myPawn->color = white;
+  computerPawn->type  = pawn; 
+  computerPawn->color = black;
   myBoard->pieces[3 + 1*8] = myPawn;
-  myBoard->pieces[4 + 2*8] = myPawn;
+  myBoard->pieces[4 + 2*8] = computerPawn;
 
   t_move* allMoves = getAllMoves(myBoard, white);
 

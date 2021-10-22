@@ -27,5 +27,12 @@ void      deleteBoard(t_board* board)
 
 t_piece*  pieceAt(t_board* board, char x, char y)
 {
-  return board->pieces[x + y*8];
+  if(x > -1 && x < 8 && y > -1 && y < 8)
+  {
+    return board->pieces[x + y*8];
+  }
+  else
+  {
+    return NULL;
+  }
 }
