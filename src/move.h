@@ -36,4 +36,8 @@ t_move* getAllMoves(t_board* board, t_color color);
 
 t_move* getAllPawnMoves(t_board* board, char pieceIdx);
 
+void    makeMove(t_board* board, t_move* movesList);
+void    undoMove(t_board* board, t_move* movesList);
+char    isMoveValid(t_board* board, t_move* trialMove);
+
 #endif
