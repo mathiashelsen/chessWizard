@@ -6,12 +6,21 @@
 
 #include <stdio.h>
 
+typedef enum
+{
+  simpleMove, 
+  capture,
+  promotion 
+} t_moveType;
+
 typedef struct t_move
 {
   char            from_x;
   char            from_y;
   char            to_x;
   char            to_y;
+  t_moveType      moveType;
+  t_piece*        capturedPiece;
   struct t_move*  nextMove;
 } t_move;
 

@@ -87,12 +87,14 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
   {
     if( (pieceY+piece->color) > -1 && (pieceY+piece->color) < 8)
     {
-      move            = malloc(sizeof(t_move));
-      move->from_x    = pieceX;
-      move->from_y    = pieceY;
-      move->to_x      = pieceX;
-      move->to_y      = pieceY + piece->color; 
-      move->nextMove  = NULL;
+      move                = malloc(sizeof(t_move));
+      move->from_x        = pieceX;
+      move->from_y        = pieceY;
+      move->to_x          = pieceX;
+      move->to_y          = pieceY + piece->color; 
+      move->moveType      = simpleMove;
+      move->capturedPiece = NULL;
+      move->nextMove      = NULL;
     }
   }
   
@@ -102,14 +104,16 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
     {
       if(pieceY+2*piece->color > -1 && pieceY+2*piece->color < 8)
       {
-        nextMove            = malloc(sizeof(t_move));
-        nextMove->from_x    = pieceX;
-        nextMove->from_y    = pieceY;
-        nextMove->to_x      = pieceX;
-        nextMove->to_y      = pieceY + 2*piece->color;
-        nextMove->nextMove  = move;
+        nextMove                = malloc(sizeof(t_move));
+        nextMove->from_x        = pieceX;
+        nextMove->from_y        = pieceY;
+        nextMove->to_x          = pieceX;
+        nextMove->to_y          = pieceY + 2*piece->color;
+        nextMove->nextMove      = move;
+        nextMove->moveType      = simpleMove;
+        nextMove->capturedPiece = NULL;
 
-        move                = nextMove;
+        move                    = nextMove;
       }
     }
   }
@@ -118,14 +122,16 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
   if(  pieceUnderAttack
     && pieceUnderAttack->color == - piece->color )
   {
-        nextMove            = malloc(sizeof(t_move));
-        nextMove->from_x    = pieceX;
-        nextMove->from_y    = pieceY;
-        nextMove->to_x      = pieceX+1;
-        nextMove->to_y      = pieceY + piece->color;
-        nextMove->nextMove  = move;
+        nextMove                = malloc(sizeof(t_move));
+        nextMove->from_x        = pieceX;
+        nextMove->from_y        = pieceY;
+        nextMove->to_x          = pieceX+1;
+        nextMove->to_y          = pieceY + piece->color;
+        nextMove->nextMove      = move;
+        nextMove->moveType      = capture;
+        nextMove->capturedPiece = pieceUnderAttack; 
 
-        move                = nextMove;
+        move                    = nextMove;
     
   }
 
@@ -133,14 +139,16 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
   if(  pieceUnderAttack
     && pieceUnderAttack->color == - piece->color )
   {
-        nextMove            = malloc(sizeof(t_move));
-        nextMove->from_x    = pieceX;
-        nextMove->from_y    = pieceY;
-        nextMove->to_x      = pieceX-1;
-        nextMove->to_y      = pieceY + piece->color;
-        nextMove->nextMove  = move;
+        nextMove                = malloc(sizeof(t_move));
+        nextMove->from_x        = pieceX;
+        nextMove->from_y        = pieceY;
+        nextMove->to_x          = pieceX-1;
+        nextMove->to_y          = pieceY + piece->color;
+        nextMove->nextMove      = move;
+        nextMove->moveType      = capture;
+        nextMove->capturedPiece = pieceUnderAttack; 
 
-        move                = nextMove;
+        move                    = nextMove;
     
   }
 
