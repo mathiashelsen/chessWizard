@@ -92,7 +92,7 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
       move->from_y        = pieceY;
       move->to_x          = pieceX;
       move->to_y          = pieceY + piece->color; 
-      move->moveType      = simpleMove;
+      move->moveType      = quiet;
       move->capturedPiece = NULL;
       move->nextMove      = NULL;
     }
@@ -110,7 +110,7 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
         nextMove->to_x          = pieceX;
         nextMove->to_y          = pieceY + 2*piece->color;
         nextMove->nextMove      = move;
-        nextMove->moveType      = simpleMove;
+        nextMove->moveType      = quiet;
         nextMove->capturedPiece = NULL;
 
         move                    = nextMove;

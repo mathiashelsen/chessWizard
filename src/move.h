@@ -8,7 +8,7 @@
 
 typedef enum
 {
-  simpleMove, 
+  quiet, 
   capture,
   promotion 
 } t_moveType;
