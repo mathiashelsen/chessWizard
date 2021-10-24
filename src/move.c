@@ -201,14 +201,11 @@ char  isMoveValid(t_board* board, t_move* move, t_color color)
 char  isKingUnderAttack(t_board* board, t_color color)
 {
   char retVal;
-  t_move* allOpponentMoves;
   t_move* move;
   
   retVal = 0;
 
-  allOpponentMoves = getAllMoves(board, color*-1);
-
-  move = allOpponentMoves;
+  move = getAllMoves(board, color*-1);
 
   while(move)
   {
