@@ -20,23 +20,23 @@ const char* getPieceShortName(t_piece *piece)
   {
     switch(piece->type)
     {
-      case pawn:    return "Pw";
-      case rook:    return "Rw";
-      case bishop:  return "Bw";
-      case knight:  return "Nw";
-      case queen:   return "Qw";
-      case king:    return "Kw";
+      case pawn:    return "\u2659";
+      case rook:    return "\u2656";
+      case bishop:  return "\u2657";
+      case knight:  return "\u2658";
+      case queen:   return "\u2655";
+      case king:    return "\u2654";
       default:      return "Huh?";
     }
   }else{
     switch(piece->type)
     {
-      case pawn:    return "Pb";
-      case rook:    return "Rb";
-      case bishop:  return "Bb";
-      case knight:  return "Nb";
-      case queen:   return "Qb";
-      case king:    return "Kb";
+      case pawn:    return "\u265f";
+      case rook:    return "\u265c";
+      case bishop:  return "\u265d";
+      case knight:  return "\u265e";
+      case queen:   return "\u265b";
+      case king:    return "\u265a";
       default:      return "Huh?";
     }
 
