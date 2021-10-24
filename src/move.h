@@ -35,11 +35,13 @@ void    concatenateMovesList(t_move* listA, t_move* listB);
 t_move* getAllMoves(t_board* board, t_color color);
 
 t_move* getAllPawnMoves(t_board* board, char pieceIdx);
+t_move* getAllKingMoves(t_board* board, char pieceIdx);
 
-void    makeMove    (t_board* board, t_move* move);
-void    undoMove    (t_board* board, t_move* move);
-char    isMoveValid (t_board* board, t_move* move, t_color color);
-char    isKingUnderAttack(t_board* board, t_color color);
-char    isCheckmate (t_board* board, t_color color);
+void    makeMove          (t_board* board, t_move* move);
+void    undoMove          (t_board* board, t_move* move);
+char    isMovePseudoValid (t_board* board, char x, char y, t_color color);
+char    isMoveValid       (t_board* board, t_move* move, t_color color);
+char    isKingUnderAttack (t_board* board, t_color color);
+char    isCheckmate       (t_board* board, t_color color);
 
 #endif

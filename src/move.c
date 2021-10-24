@@ -50,15 +50,28 @@ t_move* getAllMoves(t_board* board, t_color color)
   {
     
     if(  board->pieces[squareIdx] 
-      && board->pieces[squareIdx]->color == color
-      && board->pieces[squareIdx]->type  == pawn )
+      && board->pieces[squareIdx]->color == color)
     {
-      searchResult = getAllPawnMoves(board, squareIdx);
+      if(board->pieces[squareIdx]->type  == pawn )
+      {
+        searchResult = getAllPawnMoves(board, squareIdx);
 
-      if(!movesList)
-        movesList = searchResult;
-      else
-        concatenateMovesList(movesList, searchResult);
+        if(!movesList)
+          movesList = searchResult;
+        else
+          concatenateMovesList(movesList, searchResult);
+      }
+
+      if(board->pieces[squareIdx]->type  == king )
+      {
+        searchResult = getAllKingMoves(board, squareIdx);
+
+        if(!movesList)
+          movesList = searchResult;
+        else
+          concatenateMovesList(movesList, searchResult);
+      }
+
     }
   }
 
@@ -157,6 +170,32 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
   return move;
 }
 
+t_move* getAllKingMoves(t_board* board, char squareIdx)
+{
+  t_piece*  piece = board->pieces[squareIdx];
+  char      x     = squareIdx % 8;
+  char      y     = squareIdx / 8;
+
+  if(isMovePseudoValid(board, x+1, y  , piece->color))
+    printf("+1,0  pseudo-valid\n");
+  if(isMovePseudoValid(board, x+1, y+1, piece->color))
+    printf("+1,+1 pseudo-valid\n");
+  if(isMovePseudoValid(board, x  , y+1, piece->color))
+    printf(" 0,+1 pseudo-valid\n");
+  if(isMovePseudoValid(board, x-1, y+1, piece->color))
+    printf("-1,+1 pseudo-valid\n");
+  if(isMovePseudoValid(board, x-1, y  , piece->color))
+    printf("-1, 0 pseudo-valid\n");
+  if(isMovePseudoValid(board, x-1, y-1, piece->color))
+    printf("-1,-1 pseudo-valid\n");
+  if(isMovePseudoValid(board, x-1, y-1, piece->color))
+    printf(" 0,-1 pseudo-valid\n");
+  if(isMovePseudoValid(board, x-1, y-1, piece->color))
+    printf("+1,-1 pseudo-valid\n");
+
+  return NULL;
+}
+
 void  makeMove(t_board* board, t_move* move)
 {
   if(move)
@@ -181,6 +220,15 @@ void  undoMove(t_board* board, t_move* move)
 
     // Should also check for promotion, castling, etc.
   }
+}
+
+char  isMovePseudoValid(t_board* board, char x, char y, t_color color)
+{
+  if(   x > -1 && x < 8 && y > -1 && y < 8
+    &&  (!pieceAt(board, x, y) || pieceAt(board, x, y)->color != color))
+    return 1;
+  else
+    return 0;
 }
 
 char  isMoveValid(t_board* board, t_move* move, t_color color)
