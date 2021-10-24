@@ -34,8 +34,9 @@ void    concatenateMovesList(t_move* listA, t_move* listB);
 
 t_move* getAllMoves(t_board* board, t_color color);
 
-t_move* getAllPawnMoves(t_board* board, char pieceIdx);
-t_move* getAllKingMoves(t_board* board, char pieceIdx);
+t_move* getAllPawnMoves   (t_board* board, char pieceIdx);
+t_move* getAllKingMoves   (t_board* board, char pieceIdx);
+t_move* getAllKnightMoves (t_board* board, char pieceIdx);
 
 void    makeMove          (t_board* board, t_move* move);
 void    undoMove          (t_board* board, t_move* move);

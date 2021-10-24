@@ -52,26 +52,22 @@ t_move* getAllMoves(t_board* board, t_color color)
     if(  board->pieces[squareIdx] 
       && board->pieces[squareIdx]->color == color)
     {
-      if(board->pieces[squareIdx]->type  == pawn )
+      switch(board->pieces[squareIdx]->type)
       {
-        searchResult = getAllPawnMoves(board, squareIdx);
-
-        if(!movesList)
-          movesList = searchResult;
-        else
-          concatenateMovesList(movesList, searchResult);
+        case(pawn):   searchResult = getAllPawnMoves(board, squareIdx);
+                      break;
+        case(king):   searchResult = getAllKingMoves(board, squareIdx);
+                      break;
+        case(knight): searchResult = getAllKnightMoves(board, squareIdx);
+                      break;
+        default:      searchResult = NULL;
+                      break;
       }
 
-      if(board->pieces[squareIdx]->type  == king )
-      {
-        searchResult = getAllKingMoves(board, squareIdx);
-
-        if(!movesList)
-          movesList = searchResult;
-        else
-          concatenateMovesList(movesList, searchResult);
-      }
-
+      if(!movesList)
+        movesList = searchResult;
+      else
+        concatenateMovesList(movesList, searchResult);
     }
   }
 
@@ -191,6 +187,50 @@ t_move* getAllKingMoves(t_board* board, char squareIdx)
     {-1, -1},
     { 0, -1},
     {+1, -1}
+  };
+
+  move = NULL;
+  for(i = 0; i < 8; i++)
+  {
+    if(isMovePseudoValid(board, x+dir[i][0], y+dir[i][1], piece->color))
+    {
+      newMove = malloc(sizeof(t_move));
+      newMove->from_x = x;
+      newMove->from_y = y;
+      newMove->to_x   = x+dir[i][0];
+      newMove->to_y   = y+dir[i][1];
+      newMove->capturedPiece = board->pieces[newMove->to_x + 8*newMove->to_y];
+
+      newMove->nextMove = move;
+      move              = newMove;
+    }
+  }
+
+  return move;
+}
+
+
+t_move* getAllKnightMoves(t_board* board, char squareIdx)
+{
+  // Points to the last move made
+  t_move*   move;
+  // To allocate a new move
+  t_move*   newMove;
+  t_piece*  piece = board->pieces[squareIdx];
+
+  char i;
+  char x = squareIdx % 8;
+  char y = squareIdx / 8;
+
+  char dir[8][2] = {
+    {+1, +2},
+    {+1, -2},
+    {-1, +2},
+    {-1, -2},
+    {+2, +1},
+    {+2, -1},
+    {-2, +1},
+    {-2, -1}
   };
 
   move = NULL;
