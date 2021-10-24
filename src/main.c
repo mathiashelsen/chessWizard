@@ -27,6 +27,7 @@ int main(void)
   else
     printf("No valid moves were found");
 
+  printf("Is the first move valid?: %01d\n", isMoveValid(myBoard, allMoves, white));
   printBoard(myBoard);
   makeMove(myBoard, allMoves);
   printBoard(myBoard);

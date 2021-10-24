@@ -180,3 +180,52 @@ void  undoMove(t_board* board, t_move* move)
     // Should also check for promotion, castling, etc.
   }
 }
+
+char  isMoveValid(t_board* board, t_move* move, t_color color)
+{
+  char valid;
+  makeMove(board, move);
+
+
+  if(isKingUnderAttack(board, color))
+    valid = 0;
+  else
+    valid = 1;
+
+  undoMove(board, move);
+
+
+  return valid;
+}
+
+char  isKingUnderAttack(t_board* board, t_color color)
+{
+  char retVal;
+  t_move* allOpponentMoves;
+  t_move* move;
+  
+  retVal = 0;
+
+  allOpponentMoves = getAllMoves(board, color*-1);
+
+  move = allOpponentMoves;
+
+  while(move)
+  {
+    if(  move->capturedPiece
+      && move->capturedPiece->color == color
+      && move->capturedPiece->type  == king 
+    )
+    {
+        retVal++;
+        move = NULL;
+    }
+    else
+    {
+      move = move->nextMove;
+    }
+  }
+
+  return retVal;
+
+}
