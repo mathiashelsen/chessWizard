@@ -172,28 +172,45 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
 
 t_move* getAllKingMoves(t_board* board, char squareIdx)
 {
+  // Points to the last move made
+  t_move*   move;
+  // To allocate a new move
+  t_move*   newMove;
   t_piece*  piece = board->pieces[squareIdx];
-  char      x     = squareIdx % 8;
-  char      y     = squareIdx / 8;
 
-  if(isMovePseudoValid(board, x+1, y  , piece->color))
-    printf("+1,0  pseudo-valid\n");
-  if(isMovePseudoValid(board, x+1, y+1, piece->color))
-    printf("+1,+1 pseudo-valid\n");
-  if(isMovePseudoValid(board, x  , y+1, piece->color))
-    printf(" 0,+1 pseudo-valid\n");
-  if(isMovePseudoValid(board, x-1, y+1, piece->color))
-    printf("-1,+1 pseudo-valid\n");
-  if(isMovePseudoValid(board, x-1, y  , piece->color))
-    printf("-1, 0 pseudo-valid\n");
-  if(isMovePseudoValid(board, x-1, y-1, piece->color))
-    printf("-1,-1 pseudo-valid\n");
-  if(isMovePseudoValid(board, x-1, y-1, piece->color))
-    printf(" 0,-1 pseudo-valid\n");
-  if(isMovePseudoValid(board, x-1, y-1, piece->color))
-    printf("+1,-1 pseudo-valid\n");
+  char i;
+  char x = squareIdx % 8;
+  char y = squareIdx / 8;
 
-  return NULL;
+  char dir[8][2] = {
+    {+1,  0},
+    {+1, +1},
+    {0 , +1},
+    {-1, +1},
+    {-1,  0},
+    {-1, -1},
+    { 0, -1},
+    {+1, -1}
+  };
+
+  move = NULL;
+  for(i = 0; i < 8; i++)
+  {
+    if(isMovePseudoValid(board, x+dir[i][0], y+dir[i][1], piece->color))
+    {
+      newMove = malloc(sizeof(t_move));
+      newMove->from_x = x;
+      newMove->from_y = y;
+      newMove->to_x   = x+dir[i][0];
+      newMove->to_y   = y+dir[i][1];
+      newMove->capturedPiece = board->pieces[newMove->to_x + 8*newMove->to_y];
+
+      newMove->nextMove = move;
+      move              = newMove;
+    }
+  }
+
+  return move;
 }
 
 void  makeMove(t_board* board, t_move* move)
