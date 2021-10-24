@@ -1,5 +1,5 @@
 # chessWizard
-A Chess Game (for the C64, but not really, because too difficult)
+A Chess Game (for the C64, but not really, because too difficult) Anyhow, the thing plays better chess than me...
 
 # Algorithm overview
 ```
