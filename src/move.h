@@ -39,6 +39,7 @@ t_move* getAllPawnMoves(t_board* board, char pieceIdx);
 void    makeMove    (t_board* board, t_move* move);
 void    undoMove    (t_board* board, t_move* move);
 char    isMoveValid (t_board* board, t_move* move, t_color color);
-char    isKingUnderAttack (t_board* board, t_color);
+char    isKingUnderAttack(t_board* board, t_color color);
+char    isCheckmate (t_board* board, t_color color);
 
 #endif

@@ -2,10 +2,12 @@
 
 void    deleteAllMoves(t_move* move)
 {
-  if(move->nextMove)
+  if(  move
+    && move->nextMove)
     deleteAllMoves(move->nextMove);
 
-  free(move);
+  if(  move )
+    free(move);
 }
 
 t_move* getLastMove(t_move* move)
@@ -22,9 +24,9 @@ void    printAllMoves(t_board* board, t_move* move)
   printf("Move %s from %c%d to %c%d\n", 
     getPieceName(piece),
     move->from_x+'A',
-    move->from_y,
+    move->from_y+1,
     move->to_x+'A',
-    move->to_y);
+    move->to_y+1);
 
   if(move->nextMove)
     printAllMoves(board, move->nextMove);
@@ -194,7 +196,6 @@ char  isMoveValid(t_board* board, t_move* move, t_color color)
 
   undoMove(board, move);
 
-
   return valid;
 }
 
@@ -202,10 +203,12 @@ char  isKingUnderAttack(t_board* board, t_color color)
 {
   char retVal;
   t_move* move;
+  t_move* LL_root;
   
   retVal = 0;
 
-  move = getAllMoves(board, color*-1);
+  move    = getAllMoves(board, color*-1);
+  LL_root = move;
 
   while(move)
   {
@@ -223,6 +226,29 @@ char  isKingUnderAttack(t_board* board, t_color color)
     }
   }
 
+  deleteAllMoves(LL_root);
   return retVal;
+}
 
+char  isCheckmate(t_board* board, t_color color)
+{
+  t_move* move;
+  t_move* LL_root;
+
+  move    = getAllMoves(board, color);
+  LL_root = move;
+
+  // Keep looking for other moves, if this one is invalid
+  while(move
+    && !isMoveValid(board, move, color))
+  {
+    move = move->nextMove;
+  }
+
+  deleteAllMoves(LL_root);
+
+  if(move)
+    return 0;
+  else
+    return 1;
 }
