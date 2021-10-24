@@ -36,3 +36,26 @@ t_piece*  pieceAt(t_board* board, char x, char y)
     return NULL;
   }
 }
+
+void    printBoard(t_board* board)
+{
+  int i, j;
+  printf("\n\n");
+
+  printf("\n-------------------------\n");
+  for(i = 7; i > -1; i--)
+  {
+    for(j = 0; j < 8; j++)
+    {
+      if(board->pieces[j + 8*i])
+        printf("|%s", getPieceShortName(board->pieces[j + 8*i]));
+      else
+        printf("|  ");
+    }
+    printf("|  %01d\n-------------------------\n", i+1);
+  }
+
+  printf("  A  B  C  D  E  F  G  H\n");
+
+  printf("\n\n");
+}

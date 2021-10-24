@@ -2,6 +2,7 @@
 #define _BOARD_H
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "piece.h"
 
@@ -13,5 +14,7 @@ typedef struct
 t_board*  newBoard(void);
 void      deleteBoard(t_board* board);
 t_piece*  pieceAt(t_board*, char, char);
+
+void      printBoard(t_board* board);
 
 #endif

@@ -32,6 +32,7 @@ typedef struct
   t_color       color;
 } t_piece;
 
-const char* getPieceName(t_piece* piece);
+const char* getPieceName      (t_piece* piece);
+const char* getPieceShortName (t_piece* piece);
 
 #endif

@@ -27,6 +27,12 @@ int main(void)
   else
     printf("No valid moves were found");
 
+  printBoard(myBoard);
+  makeMove(myBoard, allMoves);
+  printBoard(myBoard);
+  undoMove(myBoard, allMoves);
+  printBoard(myBoard);
+
   deleteAllMoves(allMoves);
   deleteBoard(myBoard);
 

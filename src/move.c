@@ -154,3 +154,29 @@ t_move* getAllPawnMoves(t_board* board, char squareIdx)
 
   return move;
 }
+
+void  makeMove(t_board* board, t_move* move)
+{
+  if(move)
+  {
+    board->pieces[move->to_x + 8*move->to_y] = 
+      board->pieces[move->from_x + 8*move->from_y];
+    
+    board->pieces[move->from_x + 8*move->from_y] = NULL;
+    // Promotion, castling etc also goes here
+  }
+}
+
+void  undoMove(t_board* board, t_move* move)
+{
+  if(move)
+  {
+    board->pieces[move->from_x + 8*move->from_y] =
+      board->pieces[move->to_x + 8*move->to_y];
+
+    // Captured piece could be a null pointer, which is still valid
+    board->pieces[move->to_x + 8*move->to_y] = move->capturedPiece;
+
+    // Should also check for promotion, castling, etc.
+  }
+}
