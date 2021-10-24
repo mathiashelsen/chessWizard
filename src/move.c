@@ -281,11 +281,23 @@ void  undoMove(t_board* board, t_move* move)
 
 char  isMovePseudoValid(t_board* board, char x, char y, t_color color)
 {
-  if(   x > -1 && x < 8 && y > -1 && y < 8
-    &&  (!pieceAt(board, x, y) || pieceAt(board, x, y)->color != color))
-    return 1;
+  if(x > -1 && x < 8 && y > -1 && y < 8)
+  {
+    // There is no piece at the specified location
+    if(!pieceAt(board, x, y))
+      return 1; 
+    // There is a piece, and we can capture it
+    else if( pieceAt(board, x, y)->color != color) 
+      //Valid, but stop a possible loop
+      return 2;
+    // There is a piece, but we can't capture it
+    else
+      return 0;
+  }
   else
+  {
     return 0;
+  }
 }
 
 char  isMoveValid(t_board* board, t_move* move, t_color color)
