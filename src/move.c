@@ -46,7 +46,7 @@ t_move* getAllMoves(t_board* board, t_color color)
 
   movesList = NULL;
 
-  for(squareIdx = 0; squareIdx < 63; squareIdx++)
+  for(squareIdx = 0; squareIdx < 64; squareIdx++)
   {
     
     if(  board->pieces[squareIdx] 
@@ -183,6 +183,7 @@ t_move* getAllKingMoves(t_board* board, char squareIdx)
   char i;
   char x = squareIdx % 8;
   char y = squareIdx / 8;
+  printf("King is at %c%d\n", 'A'+x, 1+y);
 
   char dir[8][2] = {
     {+1,  0},

@@ -7,6 +7,8 @@ t_game*   newGame(void)
   game->board = newBoard();
   game->moves = NULL;
 
+  setupBoard(game->board);
+
   return game;
 }
 
@@ -32,4 +34,30 @@ void      endGame(t_game* game)
 
   // Delete the game 
   free(game);
+}
+
+void      playGame(t_game* game)
+{
+  t_color player;
+  t_move* playerMove;
+
+  player = white;
+  printBoard(game->board);
+  while(!isCheckmate(game->board, player))
+  {
+    playerMove = rand_engine_getMove(game->board, player);
+
+    // We could double check if the move is valid
+    // OMITTED
+    makeMove(game->board, playerMove);
+
+    playerMove->nextMove  = game->moves;
+    game->moves           = playerMove;
+   
+    printBoard(game->board);
+    printf("--- Please press any key to continue ---\n");
+    getchar();
+
+    player *= -1;
+  }
 }

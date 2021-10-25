@@ -4,6 +4,7 @@
 #include "board.h"
 #include "move.h"
 #include "piece.h"
+#include "engines/rand/rand_engine.h"
 
 typedef struct
 {
@@ -11,7 +12,8 @@ typedef struct
   t_move*   moves;
 } t_game;
 
-t_game*   newGame(void);
-void      endGame(t_game* game);
+t_game*   newGame     (void);
+void      endGame     (t_game* game);
+void      playGame    (t_game* game);
 
 #endif

@@ -16,5 +16,6 @@ void      deleteBoard(t_board* board);
 t_piece*  pieceAt(t_board*, char, char);
 
 void      printBoard(t_board* board);
+void      setupBoard(t_board* board);
 
 #endif

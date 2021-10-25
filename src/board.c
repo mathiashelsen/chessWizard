@@ -59,3 +59,39 @@ void    printBoard(t_board* board)
 
   printf("\n\n");
 }
+
+void    setupBoard(t_board* board)
+{
+  t_piece* piece;
+  int i;
+
+  // White Pawns
+  for(i = 0; i < 8; i++)
+  {
+      piece         = malloc(sizeof(piece));
+      piece->type   = pawn;
+      piece->color  = white;
+      board->pieces[i + 8] = piece;
+  }
+
+  // Black Pawns
+  for(i = 0; i < 8; i++)
+  {
+      piece         = malloc(sizeof(piece));
+      piece->type   = pawn;
+      piece->color  = black;
+      board->pieces[i + 6*8] = piece;
+  }
+
+  //White King
+  piece             = malloc(sizeof(piece));
+  piece->type       = king;
+  piece->color      = white;
+  board->pieces[4]  = piece;
+  //Black King
+  piece             = malloc(sizeof(piece));
+  piece->type       = king;
+  piece->color      = black;
+  board->pieces[3+7*8]  = piece;
+
+}

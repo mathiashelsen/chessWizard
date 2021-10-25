@@ -1,18 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "board.h"
-#include "piece.h"
-#include "move.h"
-#include "unittests/testBasics.h"
+//#include "board.h"
+//#include "piece.h"
+//#include "move.h"
+//#include "unittests/testBasics.h"
+#include "game.h"
 
 int main(void)
 {
-  char retVal;
+  t_game* game;
+  game = newGame();
 
-  retVal = runBasicTest();
-  retVal = runCheckmateTest();
-  retVal = runCheckmateTest_2();
+  playGame(game);
+  //char retVal;
 
-  return retVal;
+  //retVal = runBasicTest();
+  //retVal = runCheckmateTest();
+  //retVal = runCheckmateTest_2();
+
+  return EXIT_SUCCESS;
 }
