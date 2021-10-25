@@ -12,6 +12,7 @@ int main(void)
 
   retVal = runBasicTest();
   retVal = runCheckmateTest();
+  retVal = runCheckmateTest_2();
 
   return retVal;
 }

@@ -39,6 +39,7 @@ t_move* getAllKingMoves   (t_board* board, char pieceIdx);
 t_move* getAllKnightMoves (t_board* board, char pieceIdx);
 t_move* getAllRookMoves   (t_board* board, char pieceIdx);
 t_move* getAllBishopMoves (t_board* board, char pieceIdx);
+t_move* getAllQueenMoves  (t_board* board, char pieceIdx);
 
 t_move* getLinearStepMoves(t_board* board, char pieceIdx, char x_step, char y_step);
 

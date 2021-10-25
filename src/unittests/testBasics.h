@@ -7,5 +7,6 @@
 
 char runBasicTest(void);
 char runCheckmateTest(void);
+char runCheckmateTest_2(void);
 
 #endif

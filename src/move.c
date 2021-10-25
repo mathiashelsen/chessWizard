@@ -64,6 +64,8 @@ t_move* getAllMoves(t_board* board, t_color color)
                       break;
         case(bishop): searchResult = getAllBishopMoves  (board, squareIdx);
                       break;
+        case(queen):  searchResult = getAllQueenMoves   (board, squareIdx);
+                      break;
         default:      searchResult = NULL;
                       break;
       }
@@ -299,6 +301,37 @@ t_move* getAllBishopMoves (t_board* board, char pieceIdx)
   };
 
   for(i = 0; i < 4; i++)
+  {
+    newMove = getLinearStepMoves(board, pieceIdx, dir[i][0], dir[i][1]);
+    if(move)
+      concatenateMovesList(move, newMove);
+    else
+      move = newMove;
+  }
+  return move;
+
+}
+
+t_move* getAllQueenMoves (t_board* board, char pieceIdx)
+{
+  char i;
+  t_move* move;
+  t_move* newMove;
+
+  move    = NULL;
+
+  char dir[8][2] = {
+    { 1,  1},
+    {-1,  1},
+    { 1, -1},
+    {-1, -1},
+    { 1,  0},
+    {-1,  0},
+    { 0,  1},
+    { 0, -1}
+  };
+
+  for(i = 0; i < 8; i++)
   {
     newMove = getLinearStepMoves(board, pieceIdx, dir[i][0], dir[i][1]);
     if(move)
