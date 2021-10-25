@@ -54,11 +54,15 @@ t_move* getAllMoves(t_board* board, t_color color)
     {
       switch(board->pieces[squareIdx]->type)
       {
-        case(pawn):   searchResult = getAllPawnMoves(board, squareIdx);
+        case(pawn):   searchResult = getAllPawnMoves    (board, squareIdx);
                       break;
-        case(king):   searchResult = getAllKingMoves(board, squareIdx);
+        case(king):   searchResult = getAllKingMoves    (board, squareIdx);
                       break;
-        case(knight): searchResult = getAllKnightMoves(board, squareIdx);
+        case(knight): searchResult = getAllKnightMoves  (board, squareIdx);
+                      break;
+        case(rook):   searchResult = getAllRookMoves    (board, squareIdx);
+                      break;
+        case(bishop): searchResult = getAllBishopMoves  (board, squareIdx);
                       break;
         default:      searchResult = NULL;
                       break;
@@ -248,6 +252,107 @@ t_move* getAllKnightMoves(t_board* board, char squareIdx)
       newMove->nextMove = move;
       move              = newMove;
     }
+  }
+
+  return move;
+}
+
+t_move* getAllRookMoves(t_board* board, char pieceIdx)
+{
+  char i;
+  t_move* move;
+  t_move* newMove;
+
+  move    = NULL;
+
+  char dir[4][2] = {
+    { 1,  0},
+    {-1,  0},
+    { 0,  1},
+    { 0, -1}
+  };
+
+  for(i = 0; i < 4; i++)
+  {
+    newMove = getLinearStepMoves(board, pieceIdx, dir[i][0], dir[i][1]);
+    if(move)
+      concatenateMovesList(move, newMove);
+    else
+      move = newMove;
+  }
+  return move;
+}
+
+t_move* getAllBishopMoves (t_board* board, char pieceIdx)
+{
+  char i;
+  t_move* move;
+  t_move* newMove;
+
+  move    = NULL;
+
+  char dir[4][2] = {
+    { 1,  1},
+    {-1,  1},
+    { 1, -1},
+    {-1, -1}
+  };
+
+  for(i = 0; i < 4; i++)
+  {
+    newMove = getLinearStepMoves(board, pieceIdx, dir[i][0], dir[i][1]);
+    if(move)
+      concatenateMovesList(move, newMove);
+    else
+      move = newMove;
+  }
+  return move;
+
+}
+
+t_move* getLinearStepMoves(t_board* board, char pieceIdx, char x_step, char y_step)
+{
+  char    x_start, y_start, x, y;
+  t_move* move;
+  t_move* newMove;
+  t_piece* piece;
+
+  piece   = board->pieces[pieceIdx];
+  move    = NULL;
+  x       = pieceIdx % 8;
+  y       = pieceIdx / 8;
+  x_start = x;
+  y_start = y;
+
+  x       = x + x_step;
+  y       = y + y_step;
+
+  while(isMovePseudoValid(board, x, y, piece->color) == 1)
+  {
+    newMove = malloc(sizeof(t_move));
+    newMove->from_x = x_start;
+    newMove->from_y = y_start;
+    newMove->to_x   = x;
+    newMove->to_y   = y;
+    newMove->capturedPiece = NULL;
+
+    newMove -> nextMove = move;
+    move                = newMove;
+    x                   = x + x_step;
+    y                   = y + y_step;
+  }
+
+  if(isMovePseudoValid(board, x, y, piece->color) == 2)
+  {
+    newMove = malloc(sizeof(t_move));
+    newMove->from_x = x_start;
+    newMove->from_y = y_start;
+    newMove->to_x   = x;
+    newMove->to_y   = y;
+    newMove->capturedPiece = board->pieces[x + 8*y];
+
+    newMove -> nextMove = move;
+    move                = newMove;
   }
 
   return move;

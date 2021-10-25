@@ -37,6 +37,10 @@ t_move* getAllMoves(t_board* board, t_color color);
 t_move* getAllPawnMoves   (t_board* board, char pieceIdx);
 t_move* getAllKingMoves   (t_board* board, char pieceIdx);
 t_move* getAllKnightMoves (t_board* board, char pieceIdx);
+t_move* getAllRookMoves   (t_board* board, char pieceIdx);
+t_move* getAllBishopMoves (t_board* board, char pieceIdx);
+
+t_move* getLinearStepMoves(t_board* board, char pieceIdx, char x_step, char y_step);
 
 void    makeMove          (t_board* board, t_move* move);
 void    undoMove          (t_board* board, t_move* move);

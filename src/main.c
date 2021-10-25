@@ -12,5 +12,5 @@ int main(void)
 
   retVal = runBasicTest();
 
-  return EXIT_SUCCESS;
+  return retVal;
 }

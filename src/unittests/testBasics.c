@@ -7,6 +7,8 @@ char runBasicTest(void)
   t_piece*  knight_w0;
   t_piece*  king_w;
   t_piece*  pawn_b0;
+  t_piece*  rook_w0;
+  t_piece*  bishop_b0;
   t_move*   move;
 
   printf("[Test 1]: Checking checkmate detection\n");
@@ -17,6 +19,8 @@ char runBasicTest(void)
   pawn_b0   = malloc(sizeof(t_piece));
   king_w    = malloc(sizeof(t_piece));
   knight_w0 = malloc(sizeof(t_piece));
+  rook_w0   = malloc(sizeof(t_piece));
+  bishop_b0 = malloc(sizeof(t_piece));
 
   pawn_w0->type   = pawn;
   pawn_w0->color  = white;
@@ -34,6 +38,14 @@ char runBasicTest(void)
   knight_w0->color = white;
   board->pieces[0] = knight_w0;
 
+  rook_w0->type   = rook;
+  rook_w0->color  = white;
+  board->pieces[2 + 5*8] = rook_w0;
+
+  bishop_b0->type = bishop;
+  bishop_b0->color  = black;
+  board->pieces[3 + 6*8] = bishop_b0;
+
   printf("[Test 1]: Board finished:\n");
   printBoard(board);
 
@@ -43,6 +55,14 @@ char runBasicTest(void)
     printAllMoves(board, move);
   else
     printf("No valid moves were found\n");
+
+  printf("[Test 1]: Moves for black are:\n");
+  move = getAllMoves(board, black);
+  if(move)
+    printAllMoves(board, move);
+  else
+    printf("No valid moves were found\n");
+
 
   printf("[Test 1]: Is white checkmate?...%c\n", isCheckmate(board, white) ? 'y' : 'n');
 
