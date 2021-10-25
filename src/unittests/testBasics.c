@@ -79,3 +79,61 @@ char runBasicTest(void)
 
   return 0;
 }
+
+char runCheckmateTest(void)
+{
+  t_board*  board;
+  t_piece*  pawn_w0;
+  t_piece*  pawn_w1;
+  t_piece*  king_w;
+
+  t_piece*  rook_b0;
+  t_piece*  bishop_b0;
+
+  t_move*   move;
+
+  printf("[Test 1]: Checking checkmate detection\n");
+
+  printf("[Test 1]: Building board\n");
+  board     = newBoard();
+  pawn_w0   = malloc(sizeof(t_piece));
+  pawn_w1   = malloc(sizeof(t_piece));
+  king_w    = malloc(sizeof(t_piece));
+
+  rook_b0   = malloc(sizeof(t_piece));
+  bishop_b0 = malloc(sizeof(t_piece));
+
+  pawn_w0->type   = pawn;
+  pawn_w0->color  = white;
+  board->pieces[0 + 1*8] = pawn_w0;
+
+  pawn_w1->type   = pawn;
+  pawn_w1->color  = white;
+  board->pieces[1 + 1*8] = pawn_w1;
+
+  king_w->type    = king;
+  king_w->color   = white;
+  board->pieces[1 + 0*8] = king_w;
+
+  rook_b0->type   = rook;
+  rook_b0->color  = black;
+  board->pieces[5 + 0*8] = rook_b0;
+
+  bishop_b0->type = bishop;
+  bishop_b0->color  = black;
+  board->pieces[5 + 4*8] = bishop_b0;
+
+  printBoard(board);
+  printf("[Test 1]: Is white checkmate?...%c\n", isCheckmate(board, white) ? 'y' : 'n');
+
+  board->pieces[1 + 1*8] = NULL;
+  board->pieces[1 + 2*8] = pawn_w1;
+
+  printBoard(board);
+  printf("[Test 1]: Is white checkmate?...%c\n", isCheckmate(board, white) ? 'y' : 'n');
+
+
+  deleteBoard(board);
+
+  return 0;
+}

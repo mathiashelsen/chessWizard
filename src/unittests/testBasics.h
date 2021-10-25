@@ -6,5 +6,6 @@
 #include "../board.h"
 
 char runBasicTest(void);
+char runCheckmateTest(void);
 
 #endif
