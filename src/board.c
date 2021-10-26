@@ -94,4 +94,69 @@ void    setupBoard(t_board* board)
   piece->color      = black;
   board->pieces[3+7*8]  = piece;
 
+  //White Queen
+  piece             = malloc(sizeof(piece));
+  piece->type       = queen;
+  piece->color      = white;
+  board->pieces[3]  = piece;
+  //Black Queen 
+  piece             = malloc(sizeof(piece));
+  piece->type       = queen;
+  piece->color      = black;
+  board->pieces[4+7*8]  = piece;
+
+  // Rook
+  piece             = malloc(sizeof(piece));
+  piece->type       = rook;
+  piece->color      = white;
+  board->pieces[0+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = rook;
+  piece->color      = white;
+  board->pieces[7+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = rook;
+  piece->color      = black;
+  board->pieces[0+7*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = rook;
+  piece->color      = black;
+  board->pieces[7+7*8]  = piece;
+  
+  // Knight
+  piece             = malloc(sizeof(piece));
+  piece->type       = knight;
+  piece->color      = white;
+  board->pieces[1+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = knight;
+  piece->color      = white;
+  board->pieces[6+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = knight;
+  piece->color      = black;
+  board->pieces[1+7*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = knight;
+  piece->color      = black;
+  board->pieces[6+7*8]  = piece;
+
+  // Bishop
+  piece             = malloc(sizeof(piece));
+  piece->type       = bishop;
+  piece->color      = white;
+  board->pieces[2+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = bishop;
+  piece->color      = white;
+  board->pieces[5+0*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = bishop;
+  piece->color      = black;
+  board->pieces[2+7*8]  = piece;
+  piece             = malloc(sizeof(piece));
+  piece->type       = bishop;
+  piece->color      = black;
+  board->pieces[5+7*8]  = piece;
+
 }
