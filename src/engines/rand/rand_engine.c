@@ -8,8 +8,8 @@ t_move* rand_engine_getMove(t_board* board, t_color color)
   int     bestScore;
 
   move      = getAllMoves(board, color);
-  printf("Playing with %s\n", color > 0 ? "White" : "Black");
-  printAllMoves(board, move);
+  //printf("Playing with %s\n", color > 0 ? "White" : "Black");
+  //printAllMoves(board, move);
   bestScore = -1;
 
   while(move)

@@ -40,12 +40,23 @@ void      playGame(t_game* game)
 {
   t_color player;
   t_move* playerMove;
+  int     nMoves;
 
-  player = white;
+  nMoves  = 0;
+  player  = white;
   printBoard(game->board);
   while(!isCheckmate(game->board, player))
   {
-    playerMove = rand_engine_getMove(game->board, player);
+    printBoard(game->board);
+    if(player == black)
+    {
+      playerMove = rand_engine_getMove(game->board, player);
+    }
+    else
+    {
+      playerMove = humanPlayer_getMove(game->board, player);
+      nMoves++;
+    }
 
     // We could double check if the move is valid
     // OMITTED
@@ -54,10 +65,8 @@ void      playGame(t_game* game)
     playerMove->nextMove  = game->moves;
     game->moves           = playerMove;
    
-    printBoard(game->board);
-    printf("--- Please press any key to continue ---\n");
-    getchar();
-
     player *= -1;
   }
+
+  printf("Player %s has won after %d moves\n", player == white ? "Black" : "White", nMoves);
 }

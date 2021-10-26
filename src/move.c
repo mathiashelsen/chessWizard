@@ -183,7 +183,6 @@ t_move* getAllKingMoves(t_board* board, char squareIdx)
   char i;
   char x = squareIdx % 8;
   char y = squareIdx / 8;
-  printf("King is at %c%d\n", 'A'+x, 1+y);
 
   char dir[8][2] = {
     {+1,  0},

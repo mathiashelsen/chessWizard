@@ -5,6 +5,7 @@
 #include "move.h"
 #include "piece.h"
 #include "engines/rand/rand_engine.h"
+#include "engines/human/human_player.h"
 
 typedef struct
 {

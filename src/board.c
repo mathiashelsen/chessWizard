@@ -42,20 +42,29 @@ void    printBoard(t_board* board)
   int i, j;
   printf("\n\n");
 
-  printf("\n-----------------\n");
   for(i = 7; i > -1; i--)
   {
     for(j = 0; j < 8; j++)
     {
       if(board->pieces[j + 8*i])
-        printf("|%s", getPieceShortName(board->pieces[j + 8*i]));
+      {
+        if((i+j) % 2 == 0)
+          printf("\x1B[30;107m%s\x1B[97m\u2590", getPieceShortName(board->pieces[j + 8*i]));
+        else
+          printf("\x1B[30;100m%s\x1B[90m\u2590", getPieceShortName(board->pieces[j + 8*i]));
+      }
       else
-        printf("| ");
+      {
+        if((i+j) % 2 == 0)
+          printf("\x1B[30;107m \x1B[97m\u2590");
+        else
+          printf("\x1B[30;100m \x1B[90m\u2590");
+      }
     }
-    printf("|  %01d\n-----------------\n", i+1);
+    printf("\x1B[30;107m%01d\n", i+1);
   }
 
-  printf(" A B C D E F G H\n");
+  printf("A B C D E F G H\n");
 
   printf("\n\n");
 }
