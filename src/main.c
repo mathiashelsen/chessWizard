@@ -13,6 +13,7 @@ int main(void)
   game = newGame();
 
   playGame(game);
+  endGame(game);
   //char retVal;
 
   //retVal = runBasicTest();

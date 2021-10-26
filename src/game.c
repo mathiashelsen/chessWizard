@@ -3,7 +3,7 @@
 t_game*   newGame(void)
 {
   t_game* game;
-  game        = malloc(sizeof(game));
+  game        = malloc(sizeof(t_game));
   game->board = newBoard();
   game->moves = NULL;
 
@@ -46,7 +46,7 @@ void      playGame(t_game* game)
 
   nMoves  = 0;
   player  = white;
-  printBoard(game->board);
+  //printBoard(game->board);
   while(!isCheckmate(game->board, player) && !isOnlyKings(game->board))
   {
     if(player == black)
@@ -55,7 +55,7 @@ void      playGame(t_game* game)
     }
     else
     {
-      printBoard(game->board);
+      //printBoard(game->board);
       //playerMove = humanPlayer_getMove(game->board, player);
       playerMove  = greedyEngine_getMove(game->board, player);
       nMoves++;

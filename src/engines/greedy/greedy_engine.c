@@ -31,9 +31,8 @@ t_move* greedyEngine_getMove(t_board* board, t_color color)
     moveIterator = moveIterator->nextMove;
   }
 
-  retVal = malloc(sizeof(t_move));
+  retVal  = malloc(sizeof(t_move));
   *retVal = *bestMove;
-  //memcpy(retVal, bestMove, sizeof(t_move));
 
   deleteAllMoves(move);
 
