@@ -92,7 +92,7 @@ void    setupBoard(t_board* board)
   piece             = malloc(sizeof(piece));
   piece->type       = king;
   piece->color      = black;
-  board->pieces[3+7*8]  = piece;
+  board->pieces[4+7*8]  = piece;
 
   //White Queen
   piece             = malloc(sizeof(piece));
@@ -103,7 +103,7 @@ void    setupBoard(t_board* board)
   piece             = malloc(sizeof(piece));
   piece->type       = queen;
   piece->color      = black;
-  board->pieces[4+7*8]  = piece;
+  board->pieces[3+7*8]  = piece;
 
   // Rook
   piece             = malloc(sizeof(piece));
