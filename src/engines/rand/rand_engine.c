@@ -1,6 +1,6 @@
 #include "rand_engine.h"
 
-t_move* rand_engine_getMove(t_board* board, t_color color)
+t_move* randEngine_getMove(t_board* board, t_color color)
 {
   t_move* move;     //Iterator
   t_move* bestMove;

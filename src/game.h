@@ -6,6 +6,7 @@
 #include "piece.h"
 #include "engines/rand/rand_engine.h"
 #include "engines/human/human_player.h"
+#include "engines/greedy/greedy_engine.h"
 
 typedef struct
 {

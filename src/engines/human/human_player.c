@@ -29,6 +29,7 @@ t_move* humanPlayer_getMove(t_board* board, t_color color)
     move->to_y    = to_y;
     move->capturedPiece = board->pieces[to_x + 8*to_y];
 
+
     if(   !board->pieces[from_x + 8*from_y]
       ||  board->pieces[from_x + 8*from_y]->color != color
       ||  !isMovePseudoValid(board, to_x, to_y, color)

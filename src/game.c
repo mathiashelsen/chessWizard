@@ -47,14 +47,15 @@ void      playGame(t_game* game)
   printBoard(game->board);
   while(!isCheckmate(game->board, player))
   {
-    printBoard(game->board);
     if(player == black)
     {
-      playerMove = rand_engine_getMove(game->board, player);
+      playerMove = randEngine_getMove(game->board, player);
     }
     else
     {
-      playerMove = humanPlayer_getMove(game->board, player);
+      printBoard(game->board);
+      //playerMove = humanPlayer_getMove(game->board, player);
+      playerMove  = greedyEngine_getMove(game->board, player);
       nMoves++;
     }
 
