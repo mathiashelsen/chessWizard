@@ -8,6 +8,9 @@
 #include "engines/human/human_player.h"
 #include "engines/greedy/greedy_engine.h"
 
+#include <time.h>
+#include <stdlib.h>
+
 typedef struct
 {
   t_board*  board;

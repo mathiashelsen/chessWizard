@@ -169,3 +169,19 @@ void    setupBoard(t_board* board)
   board->pieces[5+7*8]  = piece;
 
 }
+
+int       isOnlyKings(t_board* board)
+{
+  int i = 0;
+  int onlyKings = 1;
+  while(i < 64 && onlyKings)
+  {
+    if(   board->pieces[i]
+      &&  board->pieces[i]->type != king)
+        onlyKings = 0;
+
+    i++;
+  }
+
+  return onlyKings;
+}

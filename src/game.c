@@ -42,10 +42,12 @@ void      playGame(t_game* game)
   t_move* playerMove;
   int     nMoves;
 
+  srand(time(NULL));
+
   nMoves  = 0;
   player  = white;
   printBoard(game->board);
-  while(!isCheckmate(game->board, player))
+  while(!isCheckmate(game->board, player) && !isOnlyKings(game->board))
   {
     if(player == black)
     {

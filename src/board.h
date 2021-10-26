@@ -15,6 +15,8 @@ t_board*  newBoard(void);
 void      deleteBoard(t_board* board);
 t_piece*  pieceAt(t_board*, char, char);
 
+int       isOnlyKings(t_board* board);
+
 void      printBoard(t_board* board);
 void      setupBoard(t_board* board);
 
