@@ -42,7 +42,6 @@ void      playGame(t_game* game)
   t_move* playerMove;
   int     nMoves;
 
-  srand(time(NULL));
 
   nMoves  = 0;
   player  = white;
@@ -57,7 +56,8 @@ void      playGame(t_game* game)
     {
       //printBoard(game->board);
       //playerMove = humanPlayer_getMove(game->board, player);
-      playerMove  = greedyEngine_getMove(game->board, player);
+      //playerMove  = greedyEngine_getMove(game->board, player);
+      playerMove  = minimaxEngine_getMove(game->board, player, 2);
       nMoves++;
     }
 
@@ -70,6 +70,7 @@ void      playGame(t_game* game)
    
     player *= -1;
   }
-
-  printf("Player %s has won after %d moves\n", player == white ? "Black" : "White", nMoves);
+  printf("%d\t%d\t%d\n", player, isCheckmate(game->board, player), nMoves);
+  //printf("Player %s has won after %d moves\n", player == white ? "Black" : "White", nMoves);
+  //printf("Player has won by %s\n", isCheckmate(game->board, player) ? "checkmate" : "draw");
 }

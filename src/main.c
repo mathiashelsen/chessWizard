@@ -10,10 +10,15 @@
 int main(void)
 {
   t_game* game;
-  game = newGame();
+  int i;
 
-  playGame(game);
-  endGame(game);
+  srand(time(NULL));
+  for(i = 0; i < 10000; i++)
+  {
+    game = newGame();
+    playGame(game);
+    endGame(game);
+  }
   //char retVal;
 
   //retVal = runBasicTest();

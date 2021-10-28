@@ -7,6 +7,7 @@
 #include "engines/rand/rand_engine.h"
 #include "engines/human/human_player.h"
 #include "engines/greedy/greedy_engine.h"
+#include "engines/minimax/minimax_engine.h"
 
 #include <time.h>
 #include <stdlib.h>

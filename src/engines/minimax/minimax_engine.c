@@ -1,6 +1,6 @@
-#include "greedy_engine.h"
+#include "minimax_engine.h"
 
-t_move* greedyEngine_getMove(t_board* board, t_color color)
+t_move* minimaxEngine_getMove(t_board* board, t_color color, int plyDepth)
 {
   t_move* move;
   t_move* moveIterator;
@@ -18,7 +18,7 @@ t_move* greedyEngine_getMove(t_board* board, t_color color)
   {
     makeMove(board, moveIterator);
 
-    score = greedyEngine_evaluateBoard(board, color); 
+    score = minimaxRecAlgo(board, color, plyDepth-1);
 
     undoMove(board, moveIterator);
 
@@ -43,7 +43,40 @@ t_move* greedyEngine_getMove(t_board* board, t_color color)
   return retVal;
 }
 
-int     greedyEngine_evaluateBoard(t_board* board, t_color color)
+int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth)
+{
+  t_move* allMoves;
+  t_move* currentMove;
+  int     bestScore;
+  int     score;
+
+  if(plyDepth == 0)
+    return minimaxEngine_evaluateBoard(board, color);
+
+  bestScore   = INT_MIN;
+  score       = 0;
+  allMoves    = NULL;
+  allMoves    = getAllMoves(board, -color);
+  currentMove = allMoves;
+
+  while(currentMove)
+  {
+    makeMove(board, currentMove);
+
+    score = -minimaxRecAlgo(board, -color, plyDepth-1); 
+    if(score > bestScore)
+      bestScore = score;
+
+    undoMove(board, currentMove);
+
+    currentMove = currentMove->nextMove;
+  }
+
+  deleteAllMoves(allMoves);
+  return bestScore;
+}
+
+int     minimaxEngine_evaluateBoard(t_board* board, t_color color)
 {
   int i;
   int score;
