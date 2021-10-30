@@ -97,41 +97,8 @@ int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth)
 
 int     minimaxEngine_evaluateBoard(t_board* board, t_color color)
 {
-  int i;
   int score;
-  int mul;
-
-
-  score = 0;
-  mul   = 1;
-
-  for(i = 0; i < 64; i++)
-  {
-    if( board->pieces[i] )
-    {
-      if(board->pieces[i]->color == color)
-        mul = 10;
-      else
-        mul = -10;
-
-      switch(board->pieces[i]->type)
-      {
-        case pawn:    score += mul*1;
-                      break;
-        case knight:  score += mul*3;
-                      break;
-        case bishop:  score += mul*3;
-                      break;
-        case rook:    score += mul*5;
-                      break;
-        case queen:   score += mul*9;
-                      break;
-        case king:    score += mul*2;
-                      break;
-      }
-    }
-  }
-
+  score = evaluateBoard(board, color);
   score += rand() % 10;
 
   return score;

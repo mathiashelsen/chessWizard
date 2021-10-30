@@ -13,7 +13,7 @@ int main(void)
   int i;
 
   srand(time(NULL));
-  for(i = 0; i < 10000; i++)
+  for(i = 0; i < 10; i++)
   {
     game = newGame();
     playGame(game);

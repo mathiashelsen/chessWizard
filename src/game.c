@@ -59,7 +59,8 @@ void      playGame(t_game* game)
       //printBoard(game->board);
       //getchar();
 
-      playerMove  = greedyEngine_getMove(game->board, player);
+      playerMove = randEngine_getMove(game->board, player);
+      //playerMove  = greedyEngine_getMove(game->board, player);
       nMoves++;
     }
 

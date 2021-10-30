@@ -1,5 +1,20 @@
 #include "board.h"
 
+const static int pieceValues[12] = {
+  [pawn      ] =  10,
+  [bishop    ] =  30,
+  [knight    ] =  30,
+  [rook      ] =  50,
+  [queen     ] =  90,
+  [king      ] =  20,
+  [pawn   + 6] = -10,
+  [bishop + 6] = -30,
+  [knight + 6] = -30,
+  [rook   + 6] = -50,
+  [queen  + 6] = -90,
+  [king   + 6] = -20
+};
+
 t_board*  newBoard(void)
 {
   int i;
@@ -184,4 +199,23 @@ int       isOnlyKings(t_board* board)
   }
 
   return onlyKings;
+}
+
+int       evaluateBoard (t_board* board, t_color color)
+{
+  int score = 0;
+  int i;
+  for(i = 0; i < 64; i++)
+  {
+      if(board->pieces[i])
+      {
+        if(board->pieces[i]->color == 1)
+          score += pieceValues[board->pieces[i]->type];
+        else
+          score += pieceValues[board->pieces[i]->type + 6];
+      }
+  }
+  
+  score *= color;
+  return score;
 }
