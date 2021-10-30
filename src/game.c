@@ -51,7 +51,7 @@ void      playGame(t_game* game)
     if(player == black)
     {
       //playerMove = randEngine_getMove(game->board, player);
-      playerMove  = alphaBetaEngine_getMove(game->board, player, 2);
+      playerMove  = alphaBetaEngine_getMove(game->board, player, 4);
     }
     else
     {
@@ -59,7 +59,8 @@ void      playGame(t_game* game)
       //printBoard(game->board);
       //getchar();
 
-      playerMove = randEngine_getMove(game->board, player);
+      playerMove  = minimaxEngine_getMove(game->board, player, 2);
+      //playerMove = randEngine_getMove(game->board, player);
       //playerMove  = greedyEngine_getMove(game->board, player);
       nMoves++;
     }
