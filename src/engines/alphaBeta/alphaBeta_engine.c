@@ -137,7 +137,7 @@ int     alphaBetaEngine_evaluateBoard(t_board* board, t_color color)
 {
   int score;
   score = evaluateBoard(board, color);
-  score += rand() % 10;
+  score += rand() % 20;
 
   return score;
 }

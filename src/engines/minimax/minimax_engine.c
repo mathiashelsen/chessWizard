@@ -12,7 +12,7 @@ t_move* minimaxEngine_getMove(t_board* board, t_color color, int plyDepth)
 
   moveIterator  = move;
   bestMove      = NULL;
-  bestScore     = -10000;
+  bestScore     = INT_MIN;
 
   /*
    * e.g. black plays, get all moves for black and do the depth search
@@ -22,7 +22,7 @@ t_move* minimaxEngine_getMove(t_board* board, t_color color, int plyDepth)
   {
     makeMove(board, moveIterator);
 
-    score = minimaxRecAlgo(board, color, plyDepth-1);
+    score = minimaxMinAlgo(board, -color, plyDepth-1);
 
     undoMove(board, moveIterator);
 
@@ -47,22 +47,22 @@ t_move* minimaxEngine_getMove(t_board* board, t_color color, int plyDepth)
   return retVal;
 }
 
-int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth)
+int     minimaxMinAlgo(t_board* board, t_color color, int plyDepth)
 {
   t_move* allMoves;
   t_move* currentMove;
-  int     bestScore;
+  int     worstScore;
   int     score;
 
   // If there is no more depth, evaluate the board
   if(plyDepth == 0)
-    return minimaxEngine_evaluateBoard(board, color);
+    return -minimaxEngine_evaluateBoard(board, color);
 
-  bestScore   = INT_MIN;
+  worstScore  = INT_MAX;
   score       = 0;
   allMoves    = NULL;
   // Get all your opposites moves
-  allMoves    = getAllMoves(board, -color);
+  allMoves    = getAllMoves(board, color);
   currentMove = allMoves;
 
   while(currentMove)
@@ -79,7 +79,55 @@ int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth)
     // I.e. the better white does, the worse black does. We want black
     // to win, so white has to have the lowest score. (Or the highest
     // negative one). So: evaluate for white, invert and maximize
-    score = -minimaxRecAlgo(board, -color, plyDepth-1); 
+    score = minimaxMaxAlgo(board, -color, plyDepth-1); 
+
+    // In the code above, you cant do away with the two minus signs,
+    // because we need color to flip between recursive calls.
+    if(score < worstScore)
+      worstScore = score;
+
+    undoMove(board, currentMove);
+
+    currentMove = currentMove->nextMove;
+  }
+
+  deleteAllMoves(allMoves);
+  return worstScore;
+}
+
+int     minimaxMaxAlgo(t_board* board, t_color color, int plyDepth)
+{
+  t_move* allMoves;
+  t_move* currentMove;
+  int     bestScore;
+  int     score;
+
+  // If there is no more depth, evaluate the board
+  if(plyDepth == 0)
+    return minimaxEngine_evaluateBoard(board, color);
+
+  bestScore   = INT_MIN;
+  score       = 0;
+  allMoves    = NULL;
+  // Get all your opposites moves
+  allMoves    = getAllMoves(board, color);
+  currentMove = allMoves;
+
+  while(currentMove)
+  {
+    makeMove(board, currentMove);
+
+    // For each move, go down recursively, but change sides
+    // If the top plyDepth was 2, we are actually calculating
+    // the board value for white (-color). Because we are optimizing
+    // for black, a positive score from evalBoard is actually a 
+    // negative one (hence the minus sign). We still try to find the
+    // highest one, because that is the best outcome for black.
+
+    // I.e. the better white does, the worse black does. We want black
+    // to win, so white has to have the lowest score. (Or the highest
+    // negative one). So: evaluate for white, invert and maximize
+    score = minimaxMinAlgo(board, -color, plyDepth-1); 
 
     // In the code above, you cant do away with the two minus signs,
     // because we need color to flip between recursive calls.
@@ -94,6 +142,7 @@ int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth)
   deleteAllMoves(allMoves);
   return bestScore;
 }
+
 
 int     minimaxEngine_evaluateBoard(t_board* board, t_color color)
 {

@@ -11,7 +11,8 @@
 
 t_move* minimaxEngine_getMove(t_board* board, t_color color, int plyDepth);
 
-int     minimaxRecAlgo(t_board* board, t_color color, int plyDepth);
+int     minimaxMinAlgo(t_board* board, t_color color, int plyDepth);
+int     minimaxMaxAlgo(t_board* board, t_color color, int plyDepth);
 
 int     minimaxEngine_evaluateBoard(t_board* board, t_color color);
 
