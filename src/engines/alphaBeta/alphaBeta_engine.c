@@ -24,7 +24,7 @@ t_move* alphaBetaEngine_getMove(t_board* board, t_color color, int plyDepth)
   {
     makeMove(board, moveIterator);
 
-    score = alphaBetaRecAlgo(board, color, plyDepth-1, alpha, beta);
+    score = alphaBetaMinAlgo(board, -color, plyDepth-1, alpha, beta);
 
     undoMove(board, moveIterator);
 
@@ -49,7 +49,49 @@ t_move* alphaBetaEngine_getMove(t_board* board, t_color color, int plyDepth)
   return retVal;
 }
 
-int     alphaBetaRecAlgo(t_board* board, t_color color, int plyDepth, int alpha, int beta)
+int     alphaBetaMinAlgo(t_board* board, t_color color, int plyDepth, int alpha, int beta)
+{
+  t_move* allMoves;
+  t_move* currentMove;
+  int     score;
+
+  // If there is no more depth, evaluate the board
+  if(plyDepth == 0)
+    return -alphaBetaEngine_evaluateBoard(board, color);
+
+  score       = 0;
+  allMoves    = NULL;
+  // Get all your opposites moves
+  allMoves    = getAllMoves(board, color);
+  currentMove = allMoves;
+
+  while(currentMove)
+  {
+    makeMove(board, currentMove);
+
+    score = alphaBetaMaxAlgo(board, -color, plyDepth-1, alpha, beta);
+
+    undoMove(board, currentMove);
+
+    if(score <= alpha )
+    {
+      deleteAllMoves(allMoves);
+      return alpha;
+    }
+
+    if(score < beta )
+    {
+      beta = score;
+    }
+
+    currentMove = currentMove->nextMove;
+  }
+
+  deleteAllMoves(allMoves);
+  return beta;
+}
+
+int     alphaBetaMaxAlgo(t_board* board, t_color color, int plyDepth, int alpha, int beta)
 {
   t_move* allMoves;
   t_move* currentMove;
@@ -62,24 +104,26 @@ int     alphaBetaRecAlgo(t_board* board, t_color color, int plyDepth, int alpha,
   score       = 0;
   allMoves    = NULL;
   // Get all your opposites moves
-  allMoves    = getAllMoves(board, -color);
+  allMoves    = getAllMoves(board, color);
   currentMove = allMoves;
 
   while(currentMove)
   {
     makeMove(board, currentMove);
 
-    score = -alphaBetaRecAlgo(board, -color, plyDepth-1, -beta, -alpha); 
+    score = alphaBetaMinAlgo(board, -color, plyDepth-1, alpha, beta);
 
     undoMove(board, currentMove);
-
-    if(score > alpha )
-      alpha = score;
 
     if(score >= beta )
     {
       deleteAllMoves(allMoves);
       return beta;
+    }
+
+    if(score > alpha )
+    {
+      alpha = score;
     }
 
     currentMove = currentMove->nextMove;

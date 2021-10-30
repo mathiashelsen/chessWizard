@@ -51,12 +51,14 @@ void      playGame(t_game* game)
     if(player == black)
     {
       //playerMove = randEngine_getMove(game->board, player);
-      playerMove  = alphaBetaEngine_getMove(game->board, player, 3);
+      playerMove  = alphaBetaEngine_getMove(game->board, player, 2);
     }
     else
     {
-      //printBoard(game->board);
       //playerMove = humanPlayer_getMove(game->board, player);
+      //printBoard(game->board);
+      //getchar();
+
       playerMove  = greedyEngine_getMove(game->board, player);
       nMoves++;
     }
@@ -71,6 +73,6 @@ void      playGame(t_game* game)
     player *= -1;
   }
   printf("%d\t%d\t%d\n", player, isCheckmate(game->board, player), nMoves);
-  //printf("Player %s has won after %d moves\n", player == white ? "Black" : "White", nMoves);
+  printf("Player %s has won after %d moves\n", player == white ? "Black" : "White", nMoves);
   //printf("Player has won by %s\n", isCheckmate(game->board, player) ? "checkmate" : "draw");
 }
