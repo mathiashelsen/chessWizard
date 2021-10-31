@@ -1,6 +1,11 @@
 # chessWizard
 A Chess Game (for the C64, but not really, because too difficult) Anyhow, the thing plays better chess than me...
 
+# TODO
+- Add some ordering when generating moves, which should make the alphaBeta algo more efficient
+- Check that the final state is "quiet"
+- Bitboard for great good
+
 # Algorithm overview
 ```
   board = initializeBoard();
