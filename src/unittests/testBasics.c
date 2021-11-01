@@ -63,6 +63,13 @@ char runBasicTest(void)
   else
     printf("No valid moves were found\n");
 
+  move = sortMoves(move);
+  printf("[Test 1]: Sorted moves for black are:\n");
+  if(move)
+    printAllMoves(board, move);
+  else
+    printf("No valid moves were found\n");
+
 
   printf("[Test 1]: Is white checkmate?...%c\n", isCheckmate(board, white) ? 'y' : 'n');
 
@@ -75,6 +82,7 @@ char runBasicTest(void)
   printBoard(board);
 
   printf("[Test 1]: Is white checkmate?...%c\n", isCheckmate(board, white) ? 'y' : 'n');
+
   deleteBoard(board);
 
   return 0;

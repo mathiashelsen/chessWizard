@@ -81,6 +81,51 @@ t_move* getAllMoves(t_board* board, t_color color)
 }
 
 /*
+ * Moves that capture go to the top of the list, other
+ * to the tail of the list
+ */
+t_move* sortMoves(t_move* moves)
+{
+  t_move* head;
+  t_move* tail;
+  t_move* move;
+  t_move* nextMove;
+
+  move = moves;
+  head = NULL;
+  tail = NULL;
+  while(move)
+  {
+    nextMove = move->nextMove;
+
+    // If this was the first element to enter the list
+    if( !head )
+    {
+      head = move;
+      tail = move;
+    }
+    else
+    {
+      if(move->capturedPiece)
+      {
+        // Put the move to the top of the list
+        move->nextMove = head;
+        head = move;
+      }
+      else
+      {
+        move->nextMove = NULL;
+        tail->nextMove = move;
+        tail = move;
+      }
+    }
+
+    move = nextMove;
+  }
+  return head;
+}
+
+/*
  * For a pawn at position squareIdx, this will return
  * all possible moves.
  */

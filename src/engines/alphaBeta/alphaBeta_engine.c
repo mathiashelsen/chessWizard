@@ -9,7 +9,7 @@ t_move* alphaBetaEngine_getMove(t_board* board, t_color color, int plyDepth)
   int     score;
   int     alpha;
   int     beta;
-  move = getAllMoves(board, color);
+  move = sortMoves(getAllMoves(board, color));
 
   moveIterator  = move;
   bestMove      = NULL;
@@ -62,7 +62,7 @@ int     alphaBetaMinAlgo(t_board* board, t_color color, int plyDepth, int alpha,
   score       = 0;
   allMoves    = NULL;
   // Get all your opposites moves
-  allMoves    = getAllMoves(board, color);
+  allMoves    = sortMoves(getAllMoves(board, color));
   currentMove = allMoves;
 
   while(currentMove)
@@ -104,7 +104,7 @@ int     alphaBetaMaxAlgo(t_board* board, t_color color, int plyDepth, int alpha,
   score       = 0;
   allMoves    = NULL;
   // Get all your opposites moves
-  allMoves    = getAllMoves(board, color);
+  allMoves    = sortMoves(getAllMoves(board, color));
   currentMove = allMoves;
 
   while(currentMove)

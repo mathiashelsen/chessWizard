@@ -33,6 +33,7 @@ t_move* getLastMove(t_move* move);
 void    concatenateMovesList(t_move* listA, t_move* listB);
 
 t_move* getAllMoves(t_board* board, t_color color);
+t_move* sortMoves(t_move* moves);
 
 t_move* getAllPawnMoves   (t_board* board, char pieceIdx);
 t_move* getAllKingMoves   (t_board* board, char pieceIdx);

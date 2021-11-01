@@ -21,7 +21,7 @@ int main(void)
   }
   //char retVal;
 
-  //retVal = runBasicTest();
+  //runBasicTest();
   //retVal = runCheckmateTest();
   //retVal = runCheckmateTest_2();
 
